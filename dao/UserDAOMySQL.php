@@ -79,4 +79,17 @@ class UserDAOMySQL implements UserDAO
 
         return true;
     }
+
+    public function insert(User $u)
+    {
+        $sql = $this->pdo->prepare("INSERT INTO users (name, email, password, birthdate, token) VALUES (:name, :email, :password, :birthdate, :token)");
+        $sql->bindValue(':name', $u->getName());
+        $sql->bindValue(':email', $u->getEmail());
+        $sql->bindValue(':password', $u->getPassword());
+        $sql->bindValue(':birthdate', $u->getBirthdate());
+        $sql->bindValue(':token', $u->getToken());
+        $sql->execute();
+
+        return true;
+    }
 }
